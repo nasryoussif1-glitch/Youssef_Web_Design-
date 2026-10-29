@@ -1,0 +1,32 @@
+{
+  "name": "youssef-web-design",
+  "version": "1.0.0",
+  "description": "Youssef Web Design — Official Website & Admin Dashboard by Youssef Nasr",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "py": "python server.py"
+  },
+  "keywords": [
+    "portfolio",
+    "web-design",
+    "egypt",
+    "youssef-nasr",
+    "freelance",
+    "arabic-website"
+  ],
+  "author": "Youssef Nasr <nasryoussif1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "better-sqlite3": "^11.0.0"
+  }
+}
+

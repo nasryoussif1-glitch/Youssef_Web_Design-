@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم الإدارية | Youssef Web Design</title>
+  
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. Authentication / Login Overlay
+       ======================================================================== -->
+  <div class="login-screen-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+          <path d="M16 16 L32 34 L48 16" stroke="#00ff88" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 34 L32 48" stroke="#00ff88" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <h2 class="login-title">تسجيل دخول المسؤول</h2>
+      <p class="login-sub">لوحة إدارة موقع Youssef Web Design</p>
+
+      <div class="login-error" id="loginErrorMsg">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+
+      <form id="adminLoginForm">
+        <div class="adm-form-group" style="text-align: right;">
+          <label class="adm-label" for="loginUsername">اسم المستخدم</label>
+          <input type="text" id="loginUsername" class="adm-input" placeholder="admin" required autocomplete="username">
+        </div>
+
+        <div class="adm-form-group" style="text-align: right;">
+          <label class="adm-label" for="loginPassword">كلمة المرور</label>
+          <input type="password" id="loginPassword" class="adm-input" placeholder="••••••••••••" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="adm-btn adm-btn-primary" style="width: 100%; padding: 0.8rem; margin-top: 0.5rem;" id="loginSubmitBtn">
+          <span>دخول إلى لوحة التحكم</span>
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem;">
+        <a href="index.html" style="font-size: 0.85rem; color: var(--text-sub); text-decoration: underline;">
+          ← العودة إلى الموقع الرئيسي
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. Main Admin Dashboard Layout
+       ======================================================================== -->
+  <div class="admin-layout" id="adminApp" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 64 64" fill="none">
+            <path d="M16 16 L32 34 L48 16" stroke="#00ff88" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 34 L32 48" stroke="#00ff88" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sidebar-brand-name">Youssef <span style="color: var(--neon-green);">Nasr</span></div>
+          <div class="sidebar-brand-sub">لوحة الإدارة الرسمية</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <button class="menu-item-btn active" data-tab="overview">
+            <span class="menu-icon">📊</span>
+            <span>نظرة عامة</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu-item-btn" data-tab="requests">
+            <span class="menu-icon">📥</span>
+            <span>طلبات المشاريع</span>
+            <span class="menu-badge" id="sidebarNewRequestsBadge">0</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu-item-btn" data-tab="services">
+            <span class="menu-icon">🛠️</span>
+            <span>الخدمات والأسعار</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu-item-btn" data-tab="portfolio">
+            <span class="menu-icon">🎨</span>
+            <span>معرض الأعمال</span>
+          </button>
+        </li>
+        <li>
+          <button class="menu-item-btn" data-tab="settings">
+            <span class="menu-icon">⚙️</span>
+            <span>الإعدادات والأمان</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <a href="index.html" target="_blank" class="adm-btn adm-btn-outline adm-btn-sm" style="width: 100%;">
+          <span>🌐 معاينة الموقع</span>
+        </a>
+        <button class="adm-btn adm-btn-danger adm-btn-sm" id="logoutBtn" style="width: 100%;">
+          <span>🚪 تسجيل الخروج</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <h1 class="topbar-title" id="pageTitle">نظرة عامة وإحصائيات العمل</h1>
+        </div>
+
+        <div class="topbar-right">
+          <div class="admin-user-pill">
+            <img src="youssef-portrait.jpg" onerror="this.onerror=null; this.src='assets/youssef-portrait.jpg';" alt="يوسف نصر" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--neon-green);">
+            <span class="status-online"></span>
+            <span id="currentAdminName">يوسف نصر (المسؤول)</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <!-- ================================================================
+             TAB 1: Overview
+             ================================================================ -->
+        <div class="tab-pane active" id="tab-overview">
+          <!-- Metrics Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">إجمالي الطلبات</span>
+                <span class="metric-icon">📁</span>
+              </div>
+              <div class="metric-value" id="statTotalRequests">0</div>
+              <span class="metric-sub">كافة الطلبات المسجلة</span>
+            </div>
+
+            <div class="metric-card" style="border-color: rgba(56, 189, 248, 0.4);">
+              <div class="metric-header">
+                <span class="metric-label">طلبات جديدة</span>
+                <span class="metric-icon">✨</span>
+              </div>
+              <div class="metric-value" style="color: #38bdf8;" id="statNewRequests">0</div>
+              <span class="metric-sub" style="color: #38bdf8;">تحتاج للمراجعة</span>
+            </div>
+
+            <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.4);">
+              <div class="metric-header">
+                <span class="metric-label">قيد المراجعة</span>
+                <span class="metric-icon">⏳</span>
+              </div>
+              <div class="metric-value" style="color: #fbbf24;" id="statReviewRequests">0</div>
+              <span class="metric-sub" style="color: #fbbf24;">جاري دراستها</span>
+            </div>
+
+            <div class="metric-card" style="border-color: rgba(0, 255, 136, 0.4);">
+              <div class="metric-header">
+                <span class="metric-label">مشاريع مقبولة</span>
+                <span class="metric-icon">🎯</span>
+              </div>
+              <div class="metric-value" style="color: #00ff88;" id="statAcceptedRequests">0</div>
+              <span class="metric-sub">تم الاتفاق مع العميل</span>
+            </div>
+
+            <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.4);">
+              <div class="metric-header">
+                <span class="metric-label">مشاريع مكتملة</span>
+                <span class="metric-icon">🏆</span>
+              </div>
+              <div class="metric-value" style="color: #10b981;" id="statCompletedRequests">0</div>
+              <span class="metric-sub" style="color: #10b981;">تم تسليمها بنجاح</span>
+            </div>
+          </div>
+
+          <!-- Recent Activity & Quick Overview -->
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h2 class="adm-card-title">
+                <span>⚡</span>
+                <span>أحدث طلبات المشاريع المستلمة</span>
+              </h2>
+              <button class="adm-btn adm-btn-outline adm-btn-sm" onclick="switchTab('requests')">
+                <span>عرض جميع الطلبات ←</span>
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="adm-table">
+                <thead>
+                  <tr>
+                    <th>تاريخ الطلب</th>
+                    <th>اسم العميل</th>
+                    <th>نوع الموقع</th>
+                    <th>الميزانية</th>
+                    <th>رقم التواصل</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewRecentTableBody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 2rem;">
+                      جاري تحميل أحدث الطلبات...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             TAB 2: Project Requests Management
+             ================================================================ -->
+        <div class="tab-pane" id="tab-requests">
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h2 class="adm-card-title">
+                <span>📥</span>
+                <span>إدارة طلبات مشاريع العملاء</span>
+              </h2>
+              <button class="adm-btn adm-btn-primary adm-btn-sm" onclick="loadRequests()">
+                <span>🔄 تحديث البيانات</span>
+              </button>
+            </div>
+
+            <!-- Search and Filter Controls -->
+            <div class="filters-bar">
+              <div class="search-box">
+                <input type="text" id="requestsSearchInput" class="search-input" placeholder="ابحث باسم العميل، الهاتف، أو البريد...">
+                <span class="search-icon">🔍</span>
+              </div>
+
+              <select id="requestsStatusFilter" class="filter-select">
+                <option value="all">كافة الحالات</option>
+                <option value="new">جديد (New)</option>
+                <option value="under_review">قيد المراجعة (Under Review)</option>
+                <option value="awaiting_client">بانتظار رد العميل (Awaiting Response)</option>
+                <option value="accepted">تم القبول (Accepted)</option>
+                <option value="in_progress">قيد التنفيذ (In Progress)</option>
+                <option value="completed">مكتمل (Completed)</option>
+                <option value="rejected">مرفوض (Rejected)</option>
+              </select>
+            </div>
+
+            <!-- Table of requests -->
+            <div class="table-responsive">
+              <table class="adm-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>التاريخ</th>
+                    <th>اسم العميل</th>
+                    <th>البريد</th>
+                    <th>الهاتف / واتساب</th>
+                    <th>نوع الموقع</th>
+                    <th>الميزانية</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="requestsTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             TAB 3: Services Management
+             ================================================================ -->
+        <div class="tab-pane" id="tab-services">
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h2 class="adm-card-title">
+                <span>🛠️</span>
+                <span>إدارة الخدمات والأسعار المبدئية</span>
+              </h2>
+              <button class="adm-btn adm-btn-primary adm-btn-sm" id="addNewServiceBtn">
+                <span>+ إضافة خدمة جديدة</span>
+              </button>
+            </div>
+
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem;">
+              يمكنك هنا تعديل تفاصيل وأسعار الخدمات الحالية، إضافة خدمات إضافية، أو تفعيل وإلغاء تفعيل أي خدمة لتظهر مباشرة لزوار الموقع.
+            </p>
+
+            <div class="table-responsive">
+              <table class="adm-table">
+                <thead>
+                  <tr>
+                    <th>اسم الخدمة</th>
+                    <th>السعر المبدئي</th>
+                    <th>الوصف</th>
+                    <th>الميزات</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="servicesTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             TAB 4: Portfolio Management
+             ================================================================ -->
+        <div class="tab-pane" id="tab-portfolio">
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <h2 class="adm-card-title">
+                <span>🎨</span>
+                <span>إدارة معرض الأعمال والنماذج</span>
+              </h2>
+              <button class="adm-btn adm-btn-primary adm-btn-sm" id="addNewProjectBtn">
+                <span>+ إضافة نموذج / مشروع جديد</span>
+              </button>
+            </div>
+
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem;">
+              إضافة وتعديل النماذج المعروضة في الصفحة الرئيسية مع الصور، الوصف الفني، والميزات التفصيلية.
+            </p>
+
+            <div class="table-responsive">
+              <table class="adm-table">
+                <thead>
+                  <tr>
+                    <th>المعاينة</th>
+                    <th>اسم المشروع</th>
+                    <th>التصنيف</th>
+                    <th>الوصف</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="portfolioTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             TAB 5: Settings & Security
+             ================================================================ -->
+        <div class="tab-pane" id="tab-settings">
+          <div class="adm-card">
+            <h2 class="adm-card-title" style="margin-bottom: 1.5rem;">
+              <span>📞</span>
+              <span>معلومات التواصل والبيانات العامة للموقع</span>
+            </h2>
+
+            <form id="generalSettingsForm">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="adm-form-group">
+                  <label class="adm-label">البريد الإلكتروني الرسمي لاستقبال الطلبات</label>
+                  <input type="email" id="setContactEmail" class="adm-input" value="nasryoussif1@gmail.com" required>
+                </div>
+
+                <div class="adm-form-group">
+                  <label class="adm-label">رقم الهاتف والواتساب الرسمي</label>
+                  <input type="text" id="setContactPhone" class="adm-input" value="01273573628" required>
+                </div>
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-label">العنوان الرئيسي للهيرو (Hero Heading)</label>
+                <input type="text" id="setHeroHeading" class="adm-input" value="أحوّل أفكارك إلى تجارب رقمية مميزة.">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-label">النص التعريفي (About Text)</label>
+                <textarea id="setAboutText" class="adm-textarea">أنا يوسف نصر، بدرس تصميم مواقع الويب وبطوّر مهاراتي في بناء واجهات عصرية وسهلة الاستخدام. بحب أبتكر أفكار جديدة وأحوّلها لتجارب رقمية واضحة ومفيدة. الموقع الناجح مش مجرد ألوان وشكل؛ هو تجربة تساعد الزائر يفهمك، يثق فيك، ويوصل لهدفه بسهولة.</textarea>
+              </div>
+
+              <button type="submit" class="adm-btn adm-btn-primary">
+                <span>حفظ التعديلات العامة</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Security: Password Change -->
+          <div class="adm-card">
+            <h2 class="adm-card-title" style="margin-bottom: 1.5rem;">
+              <span>🔒</span>
+              <span>أمان الحساب وتغيير كلمة المرور</span>
+            </h2>
+
+            <form id="changePasswordForm" style="max-width: 500px;">
+              <div class="adm-form-group">
+                <label class="adm-label">كلمة المرور الحالية</label>
+                <input type="password" id="currentPassword" class="adm-input" required autocomplete="current-password">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-label">كلمة المرور الجديدة</label>
+                <input type="password" id="newPassword" class="adm-input" required minlength="8" autocomplete="new-password">
+              </div>
+
+              <div class="adm-form-group">
+                <label class="adm-label">تأكيد كلمة المرور الجديدة</label>
+                <input type="password" id="confirmNewPassword" class="adm-input" required minlength="8" autocomplete="new-password">
+              </div>
+
+              <button type="submit" class="adm-btn adm-btn-primary">
+                <span>تحديث كلمة المرور</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       3. Request Detail Modal
+       ======================================================================== -->
+  <div class="adm-modal-backdrop" id="requestDetailModal">
+    <div class="adm-modal-box">
+      <button class="adm-modal-close" onclick="closeRequestModal()">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem; color: var(--neon-green);" id="modalReqClientName">
+        تفاصيل طلب المشروع
+      </h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">البريد الإلكتروني:</span>
+          <a href="#" id="modalReqEmailLink" style="font-weight: 700; color: #fff; text-decoration: underline;"></a>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">رقم الهاتف / واتساب:</span>
+          <a href="#" target="_blank" id="modalReqWhatsappLink" class="adm-btn adm-btn-primary adm-btn-sm" style="display: inline-flex; margin-top: 4px;">
+            <span>محادثة واتساب 💬</span>
+          </a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">نوع الموقع المطلوب:</span>
+          <strong id="modalReqType" style="color: var(--neon-green);"></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">الميزانية التقديرية:</span>
+          <strong id="modalReqBudget"></strong>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">الموعد المستهدف للتسليم:</span>
+        <span id="modalReqDeliveryDate">غير محدد</span>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <span style="font-size: 0.8rem; color: var(--text-dim); display: block; margin-bottom: 0.3rem;">تفاصيل ووصف المشروع:</span>
+        <div id="modalReqDescription" style="background: #080d0a; border: 1px solid var(--admin-border); padding: 1rem; border-radius: 8px; font-size: 0.92rem; line-height: 1.7; white-space: pre-wrap;"></div>
+      </div>
+
+      <div id="modalReqAttachmentContainer" style="margin-bottom: 1.5rem; display: none;">
+        <span style="font-size: 0.8rem; color: var(--text-dim); display: block; margin-bottom: 0.3rem;">المرفقات:</span>
+        <a href="#" id="modalReqAttachmentLink" target="_blank" class="adm-btn adm-btn-outline adm-btn-sm">
+          <span>📎 تحميل / فتح الملف المرفق</span>
+        </a>
+      </div>
+
+      <!-- Change Status & Internal Notes -->
+      <hr style="border: 0; border-top: 1px solid var(--admin-border); margin: 1.5rem 0;">
+
+      <div class="adm-form-group">
+        <label class="adm-label">تغيير حالة الطلب</label>
+        <select id="modalReqStatusSelect" class="adm-select">
+          <option value="new">جديد (New)</option>
+          <option value="under_review">قيد المراجعة (Under Review)</option>
+          <option value="awaiting_client">بانتظار رد العميل (Awaiting Response)</option>
+          <option value="accepted">تم القبول (Accepted)</option>
+          <option value="in_progress">قيد التنفيذ (In Progress)</option>
+          <option value="completed">مكتمل (Completed)</option>
+          <option value="rejected">مرفوض (Rejected)</option>
+        </select>
+      </div>
+
+      <div class="adm-form-group">
+        <label class="adm-label">ملاحظات داخلية خاصة بالمسؤول (لا يراها العميل)</label>
+        <textarea id="modalReqInternalNotes" class="adm-textarea" placeholder="أضف ملاحظاتك، الاتفاقات السعرية، المواعيد..."></textarea>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button class="adm-btn adm-btn-primary" id="saveRequestModalBtn">
+          <span>حفظ التعديلات والملاحظات</span>
+        </button>
+        <button class="adm-btn adm-btn-outline" onclick="closeRequestModal()">
+          <span>إغلاق</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       4. Service Edit Modal
+       ======================================================================== -->
+  <div class="adm-modal-backdrop" id="serviceEditModal">
+    <div class="adm-modal-box">
+      <button class="adm-modal-close" onclick="closeServiceModal()">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1.25rem; color: var(--neon-green);" id="serviceModalTitle">
+        تعديل الخدمة
+      </h3>
+
+      <form id="serviceEditForm">
+        <input type="hidden" id="editServiceId">
+
+        <div class="adm-form-group">
+          <label class="adm-label">اسم الخدمة</label>
+          <input type="text" id="editServiceName" class="adm-input" required>
+        </div>
+
+        <div class="adm-form-group">
+          <label class="adm-label">السعر المبدئي بالجنيه المصري (EGP)</label>
+          <input type="number" id="editServicePrice" class="adm-input" required>
+        </div>
+
+        <div class="adm-form-group">
+          <label class="adm-label">وصف الخدمة</label>
+          <textarea id="editServiceDesc" class="adm-textarea" required></textarea>
+        </div>
+
+        <div class="adm-form-group">
+          <label class="adm-label">الميزات (سطر لكل ميزة)</label>
+          <textarea id="editServiceFeatures" class="adm-textarea" placeholder="صفحة رئيسية مخصصة&#10;تصميم متجاوب بالكامل..."></textarea>
+        </div>
+
+        <div class="adm-form-group">
+          <label class="adm-label">حالة الخدمة</label>
+          <select id="editServiceActive" class="adm-select">
+            <option value="1">مفعلة (تظهر في الموقع)</option>
+            <option value="0">معطلة (مخفية)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="submit" class="adm-btn adm-btn-primary">
+            <span>حفظ بيانات الخدمة</span>
+          </button>
+          <button type="button" class="adm-btn adm-btn-outline" onclick="closeServiceModal()">
+            <span>إلغاء</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="admin.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b100e"/>
+      <stop offset="100%" stop-color="#050807"/>
+    </linearGradient>
+    <linearGradient id="neonG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ff88"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="cardG" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#16201b"/>
+      <stop offset="100%" stop-color="#0e1411"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="16" fill="url(#bgG)"/>
+  <rect x="1" y="1" width="798" height="498" rx="15" fill="none" stroke="#00ff88" stroke-opacity="0.25" stroke-width="1.5"/>
+
+  <!-- Browser Header -->
+  <rect x="0" y="0" width="800" height="44" rx="16" fill="#111815"/>
+  <circle cx="28" cy="22" r="5" fill="#ef4444" opacity="0.8"/>
+  <circle cx="44" cy="22" r="5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="60" cy="22" r="5" fill="#10b981" opacity="0.8"/>
+  
+  <rect x="100" y="12" width="460" height="20" rx="10" fill="#0b100e" stroke="#1f2d26" stroke-width="1"/>
+  <text x="330" y="26" font-family="'Cairo', sans-serif" font-size="11" fill="#6ee7b7" text-anchor="middle">legendary-restaurant.preview / Concept &amp; Prototype</text>
+
+  <rect x="670" y="12" width="105" height="20" rx="10" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-width="0.8"/>
+  <text x="722" y="26" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#00ff88" text-anchor="middle">نموذج مطعم</text>
+
+  <!-- Mockup Navigation -->
+  <rect x="30" y="60" width="740" height="50" rx="12" fill="#121b16" stroke="#1f2f27" stroke-width="1"/>
+  <text x="50" y="91" font-family="'Cairo', sans-serif" font-size="16" font-weight="900" fill="#00ff88" filter="url(#glow)">LEGANDRY</text>
+  <text x="145" y="91" font-family="'Cairo', sans-serif" font-size="13" font-weight="600" fill="#f1f5f4">RESTOURANT</text>
+
+  <!-- Nav links -->
+  <text x="390" y="90" font-family="'Cairo', sans-serif" font-size="12" fill="#00ff88" font-weight="bold">القائمة الرئيسية</text>
+  <text x="490" y="90" font-family="'Cairo', sans-serif" font-size="12" fill="#9ca3af">العروض الخاصة</text>
+  <text x="580" y="90" font-family="'Cairo', sans-serif" font-size="12" fill="#9ca3af">حجز طاولة</text>
+
+  <!-- Cart Pill -->
+  <rect x="660" y="70" width="95" height="30" rx="15" fill="url(#neonG)"/>
+  <text x="707" y="90" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#050807" text-anchor="middle">السلة (3) 🛒</text>
+
+  <!-- Hero Banner inside preview -->
+  <g transform="translate(30, 125)">
+    <rect width="740" height="135" rx="14" fill="url(#cardG)" stroke="#1d2e25" stroke-width="1"/>
+    
+    <!-- Accent lights -->
+    <circle cx="680" cy="40" r="80" fill="#00ff88" opacity="0.08" filter="url(#glow)"/>
+    <circle cx="80" cy="90" r="60" fill="#00ff88" opacity="0.05" filter="url(#glow)"/>
+
+    <text x="40" y="45" font-family="'Cairo', sans-serif" font-size="22" font-weight="900" fill="#f1f5f4">أشهى المأكولات العالمية بلمسة عصرية</text>
+    <text x="40" y="75" font-family="'Cairo', sans-serif" font-size="13" fill="#94a3a0">قائمة غنية بالمشاوي الإيطالية، البرجر الفاخر، والباستا الإيطالية مع طلب مباشر أونلاين</text>
+
+    <!-- Hero CTA Buttons -->
+    <rect x="40" y="92" width="130" height="32" rx="8" fill="url(#neonG)"/>
+    <text x="105" y="113" font-family="'Cairo', sans-serif" font-size="12" font-weight="bold" fill="#060907" text-anchor="middle">اطلب الآن أونلاين</text>
+
+    <rect x="180" y="92" width="120" height="32" rx="8" fill="#18241e" stroke="#00ff88" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="240" y="113" font-family="'Cairo', sans-serif" font-size="12" font-weight="600" fill="#00ff88" text-anchor="middle">احجز طاولتك</text>
+  </g>
+
+  <!-- Food Items Cards Grid -->
+  <!-- Card 1 -->
+  <g transform="translate(30, 275)">
+    <rect width="233" height="195" rx="12" fill="url(#cardG)" stroke="#1f2f27" stroke-width="1"/>
+    <rect x="12" y="12" width="209" height="95" rx="8" fill="#192520"/>
+    <!-- Food illustration/symbol -->
+    <circle cx="116" cy="60" r="32" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-opacity="0.3"/>
+    <text x="116" y="66" font-size="28" text-anchor="middle">🥩</text>
+    <rect x="150" y="20" width="60" height="20" rx="10" fill="#00ff88" fill-opacity="0.2"/>
+    <text x="180" y="34" font-family="'Cairo', sans-serif" font-size="10" font-weight="bold" fill="#00ff88" text-anchor="middle">الأكثر طلباً</text>
+
+    <text x="15" y="130" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#f1f5f4">ستيك واغيو مشوي</text>
+    <text x="15" y="150" font-family="'Cairo', sans-serif" font-size="11" fill="#889692">لحم بقري ممتاز مع صوص المشروم</text>
+    
+    <text x="15" y="180" font-family="'Cairo', sans-serif" font-size="15" font-weight="900" fill="#00ff88">350 ج.م</text>
+    <rect x="155" y="160" width="66" height="26" rx="6" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-width="1"/>
+    <text x="188" y="177" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#00ff88" text-anchor="middle">+ إضافة</text>
+  </g>
+
+  <!-- Card 2 -->
+  <g transform="translate(283, 275)">
+    <rect width="233" height="195" rx="12" fill="url(#cardG)" stroke="#1f2f27" stroke-width="1"/>
+    <rect x="12" y="12" width="209" height="95" rx="8" fill="#192520"/>
+    <circle cx="116" cy="60" r="32" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-opacity="0.3"/>
+    <text x="116" y="66" font-size="28" text-anchor="middle">🍔</text>
+
+    <text x="15" y="130" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#f1f5f4">برجر سموكي تشيز</text>
+    <text x="15" y="150" font-family="'Cairo', sans-serif" font-size="11" fill="#889692">شريحة أنجوس مع جبن الشيدر المدخن</text>
+    
+    <text x="15" y="180" font-family="'Cairo', sans-serif" font-size="15" font-weight="900" fill="#00ff88">190 ج.م</text>
+    <rect x="155" y="160" width="66" height="26" rx="6" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-width="1"/>
+    <text x="188" y="177" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#00ff88" text-anchor="middle">+ إضافة</text>
+  </g>
+
+  <!-- Card 3 -->
+  <g transform="translate(537, 275)">
+    <rect width="233" height="195" rx="12" fill="url(#cardG)" stroke="#1f2f27" stroke-width="1"/>
+    <rect x="12" y="12" width="209" height="95" rx="8" fill="#192520"/>
+    <circle cx="116" cy="60" r="32" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-opacity="0.3"/>
+    <text x="116" y="66" font-size="28" text-anchor="middle">🍝</text>
+
+    <text x="15" y="130" font-family="'Cairo', sans-serif" font-size="14" font-weight="bold" fill="#f1f5f4">باستا ترافل ألفريدو</text>
+    <text x="15" y="150" font-family="'Cairo', sans-serif" font-size="11" fill="#889692">معكرونة فيتوتشيني مع كريمة الكمأة</text>
+    
+    <text x="15" y="180" font-family="'Cairo', sans-serif" font-size="15" font-weight="900" fill="#00ff88">240 ج.م</text>
+    <rect x="155" y="160" width="66" height="26" rx="6" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-width="1"/>
+    <text x="188" y="177" font-family="'Cairo', sans-serif" font-size="11" font-weight="bold" fill="#00ff88" text-anchor="middle">+ إضافة</text>
+  </g>
+</svg>
+
